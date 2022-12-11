@@ -1,4 +1,4 @@
-import opendatasets as od
+'''import opendatasets as od
 import zipfile
 
 # download data from kaggle
@@ -8,4 +8,4 @@ od.download(
 # unzip file
 Dataset = "celeba-dataset"
 with zipfile.ZipFile("./celeba-dataset/"+Dataset+".zip", "r") as z:
-    z.extractall(".")
+    z.extractall(".")'''
