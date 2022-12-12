@@ -1,8 +1,8 @@
 import cv2
-import math
 import time
 import matplotlib.pyplot as plt
 import os
+from PIL import Image
 from logging import exception
 import sys
 #from  Adafruit_IO import  MQTTClient
@@ -12,30 +12,34 @@ import sys
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = ""
-'''
-def  connected(client):
+AIO_KEY = "aio_quUk68GbRssoYh5rsfFXStkvHTdq"
+
+
+def connected(client):
     print("Service connected")
     client.subscribe(AIO_FEED_ID)
 
-def  subscribe(client , userdata , mid , granted_qos):
+
+def subscribe(client, userdata, mid, granted_qos):
     print("Subscribed")
 
-def  disconnected(client):
-    print("Disconnected!!!")
-    sys.exit (1)
 
-def  message(client , feed_id , payload):
+def disconnected(client):
+    print("Disconnected!!!")
+    sys.exit(1)
+
+
+def message(client, feed_id, payload):
     print("Data received " + payload)
 
-client = MQTTClient(AIO_USERNAME , AIO_KEY)
+
+client = MQTTClient(AIO_USERNAME, AIO_KEY)
 client.on_connect = connected
 client.on_disconnect = disconnected
 client.on_message = message
 client.on_subscribe = subscribe
 client.connect()
 client.loop_background()
-'''
 
 
 # get models and defining categories and statistics
@@ -56,12 +60,6 @@ ageList = [
     '(30- 39)', '(40-55)', '(56-60)', '(61-70)', '(71-100)'
 ]
 genderList = ["Male", "Female"]
-
-# for storing values.
-predicted_age = []
-predicted_gender = []
-confidenceAge = []
-confidenceGender = []
 
 # Load network
 ageNet = cv2.dnn.readNet(ageModel, ageProto)
@@ -154,7 +152,6 @@ def age_gender_detector(frame):
 
         age = ageList[agePreds[0].argmax()]
 
-        #print("Age Output : {}".format(agePreds))
         print("Age : {}, conf = {:.3f}".format(age, agePreds[0].max()))
 
         # store values for iot
@@ -174,17 +171,17 @@ def age_gender_detector(frame):
         # client.publish("Gender_confidence", conf_gender)
 
         label = "{} , {}".format(gender, age)
-        '''cv2.putText(
-            img= frameFace,
-            text= label,
-            org= (bbox[0], bbox[1] - 10),
-            fontFace= cv2.FONT_HERSHEY_SIMPLEX,
-            fontScale= 0.8,
-            color= (0, 255, 255),
-            thickness= 2,
+        cv2.putText(
+            img=frameFace,
+            text=label,
+            org=(bbox[0], bbox[1] - 10),
+            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            fontScale=0.8,
+            color=(0, 255, 255),
+            thickness=2,
             # cv2. LINE_AA gives anti-aliased line.
-            lineType= cv2.LINE_AA,
-        )'''
+            lineType=cv2.LINE_AA,
+        )
     return frameFace
 
 
@@ -197,7 +194,7 @@ def show_results(folder):
 
         # cv2.imread: load an image from the specified file
         # os.path.join: combine path names into one complete path
-        img = cv2.imread(os.path.join(folder, filename))
+        img = cv2.imread(os.path.join(folder, filename))  # try change into
         if img is not None:
             images.append(img)
 
