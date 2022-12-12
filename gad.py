@@ -1,19 +1,20 @@
 import cv2
-import math
 import time
 import matplotlib.pyplot as plt
 import os
+from PIL import Image
 from logging import exception
 import  sys
-#from  Adafruit_IO import  MQTTClient
-#from sqlalchemy import except_
-
+from  Adafruit_IO import  MQTTClient
+from sqlalchemy import except_
+import io
+import base64
 
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = ""
-'''
+AIO_KEY = "aio_quUk68GbRssoYh5rsfFXStkvHTdq"
+
 def  connected(client):
     print("Service connected")
     client.subscribe(AIO_FEED_ID)
@@ -35,7 +36,7 @@ client.on_message = message
 client.on_subscribe = subscribe
 client.connect()
 client.loop_background()
-'''
+
 
 
 # get models and defining categories and statistics
@@ -55,12 +56,6 @@ ageList = [
     '(30- 39)', '(40-55)', '(56-60)', '(61-70)', '(71-100)'
 ]
 genderList = ["Male", "Female"]
-
-# for storing values.
-predicted_age = []
-predicted_gender = []
-confidenceAge = []
-confidenceGender = []
 
 # Load network
 ageNet = cv2.dnn.readNet(ageModel, ageProto)
@@ -154,38 +149,47 @@ def age_gender_detector(frame):
         
         age = ageList[agePreds[0].argmax()]
 
-        #print("Age Output : {}".format(agePreds))
         print("Age : {}, conf = {:.3f}".format(age, agePreds[0].max()))
 
         # store values for iot
         
         print("Update Age:", age) # check age name
-        # client.publish("Age", age)
+        client.publish("age", age)
 
         print("Update Gender:", gender) # check age name
-        # client.publish("Gender", gender)
+        # client.publish("gender", gender)
         
         conf_age = agePreds[0].max()
         print("Update Age Confidence:", conf_age) # check age name
-        # client.publish("Age_Confidence", conf_age)
+        # client.publish("age confidence", conf_age)
         
         conf_gender = genderPreds[0].max()
         print("Update Confidence:", conf_gender) # check age name
-        # client.publish("Gender_confidence", conf_gender)
-        
+        # client.publish("gender confidence", conf_gender)
 
-        label = "{} , {}".format(gender, age)
-        cv2.putText(
-            img= frameFace,
-            text= label,
-            org= (bbox[0], bbox[1] - 10),
-            fontFace= cv2.FONT_HERSHEY_SIMPLEX,
-            fontScale= 0.8,
-            color= (0, 255, 255),
-            thickness= 2,
-            # cv2. LINE_AA gives anti-aliased line.
-            lineType= cv2.LINE_AA,
-        )
+        ### Publish image. (referring to this webpage: https://gist.github.com/abachman/b0d3687227da7f82818174a89b325588)
+        '''
+        ##### Optimising image
+        optim_stream = io.BytesIO()
+
+        ##### reducing quaily if too big
+        frame.save(optim_stream, format='jpeg', quality=70, optimize=True)
+        optim_stream.seek(0)
+
+        ##### converting
+        value = base64.b64encode(optim_stream.read())
+
+        if len(value) > 102400:
+            print("Image is too big.")
+            print(f"got {len(value)} bytes.")
+            client.publish('actions', 'image too big')
+
+        else:
+            print(f"publishing {value[0:32]}...{len(value)} bytes to Image")
+            client.publish('Image', value)
+            client.publish('actions', f'image sent, {len(value)} bytes')
+        '''
+        
     return frameFace
 
 
@@ -198,7 +202,7 @@ def show_results(folder):
 
         # cv2.imread: load an image from the specified file
         # os.path.join: combine path names into one complete path
-        img = cv2.imread(os.path.join(folder, filename))
+        img = cv2.imread(os.path.join(folder, filename)) ## try change into 
         if img is not None:
             images.append(img)
 
@@ -213,7 +217,3 @@ def show_results(folder):
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
 show_results("./img")
 
-#print(predicted_age)
-#print(predicted_gender)
-#print(confidenceAge)
-#print(confidenceGender)
