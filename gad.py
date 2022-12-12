@@ -8,7 +8,7 @@ import sys
 from Adafruit_IO import MQTTClient
 from sqlalchemy import except_
 
-
+'''
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
@@ -40,6 +40,7 @@ client.on_message = message
 client.on_subscribe = subscribe
 client.connect()
 client.loop_background()
+'''
 
 
 # get models and defining categories and statistics
@@ -56,7 +57,7 @@ MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744,
                      114.895847746)  # model value
 
 ageList = [
-    '(0-6)', '(6-13)', '(14-19)', '(20-29)',
+    '(0-6)', '(7-13)', '(14-19)', '(20-29)',
     '(30- 39)', '(40-55)', '(56-60)', '(61-70)', '(71-100)'
 ]
 genderList = ["Male", "Female"]
@@ -69,7 +70,7 @@ padding = 20
 
 
 # defining function
-def getFaceBox(net, frame, conf_threshold=0.7):
+def getFaceBox(net, frame, conf_threshold=0.75):
     '''
     Detect the face of the person inside the image and Output a bounding box
     encapsulating the face detected.
@@ -171,17 +172,6 @@ def age_gender_detector(frame):
         # client.publish("Gender_confidence", conf_gender)
 
         label = "{} , {}".format(gender, age)
-        cv2.putText(
-            img=frameFace,
-            text=label,
-            org=(bbox[0], bbox[1] - 10),
-            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-            fontScale=0.8,
-            color=(0, 255, 255),
-            thickness=2,
-            # cv2. LINE_AA gives anti-aliased line.
-            lineType=cv2.LINE_AA,
-        )
     return frameFace
 
 
