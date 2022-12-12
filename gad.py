@@ -5,8 +5,8 @@ import os
 from PIL import Image
 from logging import exception
 import sys
-#from  Adafruit_IO import  MQTTClient
-#from sqlalchemy import except_
+from Adafruit_IO import MQTTClient
+from sqlalchemy import except_
 
 
 # define stuff for Adafruit.
