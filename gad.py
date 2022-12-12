@@ -172,6 +172,17 @@ def age_gender_detector(frame):
         # client.publish("Gender_confidence", conf_gender)
 
         label = "{} , {}".format(gender, age)
+        cv2.putText(
+            img=frameFace,
+            text=label,
+            org=(bbox[0], bbox[1] - 10),
+            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            fontScale=0.8,
+            color=(0, 255, 255),
+            thickness=2,
+            # cv2. LINE_AA gives anti-aliased line.
+            lineType=cv2.LINE_AA,
+        )
     return frameFace
 
 
