@@ -197,7 +197,9 @@ def show_results(folder):
 
 
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
-show_results("./img")
+# show_results("./img")
+show_results(
+    "./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/7285955@N06/")
 
 # print(predicted_age)
 # print(predicted_gender)
