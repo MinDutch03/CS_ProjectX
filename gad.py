@@ -15,7 +15,7 @@ import numpy as np
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_Ppvp25gxSOAsheA1Cij4GGbk0c0Q"
+AIO_KEY = "aio_IfLy59acANcbheiXfQzGKWw0japP"
 
 
 def connected(client):
@@ -70,8 +70,9 @@ genderNet = cv2.dnn.readNet(genderModel, genderProto)
 faceNet = cv2.dnn.readNet(faceModel, faceProto)
 padding = 20
 
-
 # defining function
+
+
 def getFaceBox(net, frame, conf_threshold=0.7):
     '''
     Detect the face of the person inside the image and Output a bounding box
@@ -160,18 +161,18 @@ def age_gender_detector(frame):
         # store values for iot
 
         print("Update Age:", age)  # check age name
-        client.publish("Age", age)
+        #client.publish("age", age)
 
         print("Update Gender:", gender)  # check age name
-        client.publish("Gender", gender)
+        #client.publish("gender", gender)
 
         conf_age = agePreds[0].max()
         print("Update Age Confidence:", conf_age)  # check age name
-        client.publish("Age_Confidence", conf_age)
+        #client.publish("age_confidence", conf_age)
 
         conf_gender = genderPreds[0].max()
         print("Update Gender Confidence:", conf_gender)  # check age name
-        client.publish("Gender_confidence", conf_gender)
+        #client.publish("gender_confidence", conf_gender)
 
         label = "{} , {}".format(gender, age)
         cv2.putText(
@@ -212,10 +213,23 @@ def show_results(folder):
 
 
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
-show_results("./img/")
+show_results("./img")
 # show_results("./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/1/")
 
 # print(predicted_age)
 # print(predicted_gender)
 # print(confidenceAge)
 # print(confidenceGender)
+image_encode = "./img/1.jpg"
+
+
+def get_base64(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode('utf-8')
+
+
+print("Encoding...")
+imagedata = get_base64(image_encode)
+
+print("Sending...")
+client.publish("image", imagedata)
