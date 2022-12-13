@@ -206,6 +206,8 @@ def show_results(folder):
         plt.imshow(rgb_output)
         plt.show()
 
+        # publish image data
+
 
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
 # show_results("./img")
