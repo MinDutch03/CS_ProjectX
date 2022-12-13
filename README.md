@@ -64,7 +64,7 @@ pip install pillow
 # Prerequisites 🚀
 
 * Python
-* OpenCv
+* OpenCV
 * Matplotlib
 * Pillow
 
