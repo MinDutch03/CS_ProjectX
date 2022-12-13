@@ -18,8 +18,7 @@
   * (20-29)
   * (30-39)
   * (40-55)
-  * (56-60)
-  * (61-70)
+  * (56-70)
   * (71-100)
 * It is very difficult to accurately guess an exact age from a single image because of factors like makeup, lighting, obstructions, and facial expressions. And so, I made this a classification problem instead of making it one of regression
 

@@ -59,7 +59,7 @@ MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744,
 
 ageList = [
     '(0-6)', '(7-13)', '(14-19)', '(20-29)',
-    '(30- 39)', '(40-55)', '(56-60)', '(61-70)', '(71-100)'
+    '(30- 39)', '(40-55)', '(56-70)', '(71-100)'
 ]
 genderList = ["Male", "Female"]
 
@@ -211,7 +211,7 @@ def show_results(folder):
 
 
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
-# show_results("./img")
+show_results("./img")
 # show_results("./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/1/")
 
 # print(predicted_age)
