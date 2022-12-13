@@ -7,13 +7,15 @@ from logging import exception
 import sys
 from Adafruit_IO import MQTTClient
 from sqlalchemy import except_
+import io
+import base64
+import numpy as np
 
 
-'''
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_quUk68GbRssoYh5rsfFXStkvHTdq"
+AIO_KEY = "aio_Ppvp25gxSOAsheA1Cij4GGbk0c0Q"
 
 
 def connected(client):
@@ -41,7 +43,6 @@ client.on_message = message
 client.on_subscribe = subscribe
 client.connect()
 client.loop_background()
-'''
 
 
 # get models and defining categories and statistics
@@ -71,7 +72,7 @@ padding = 20
 
 
 # defining function
-def getFaceBox(net, frame, conf_threshold=0.75):
+def getFaceBox(net, frame, conf_threshold=0.7):
     '''
     Detect the face of the person inside the image and Output a bounding box
     encapsulating the face detected.
@@ -159,18 +160,18 @@ def age_gender_detector(frame):
         # store values for iot
 
         print("Update Age:", age)  # check age name
-        # client.publish("Age", age)
+        client.publish("Age", age)
 
         print("Update Gender:", gender)  # check age name
-        # client.publish("Gender", gender)
+        client.publish("Gender", gender)
 
         conf_age = agePreds[0].max()
         print("Update Age Confidence:", conf_age)  # check age name
-        # client.publish("Age_Confidence", conf_age)
+        client.publish("Age_Confidence", conf_age)
 
         conf_gender = genderPreds[0].max()
-        print("Update Confidence:", conf_gender)  # check age name
-        # client.publish("Gender_confidence", conf_gender)
+        print("Update Gender Confidence:", conf_gender)  # check age name
+        client.publish("Gender_confidence", conf_gender)
 
         label = "{} , {}".format(gender, age)
         cv2.putText(
@@ -200,10 +201,10 @@ def show_results(folder):
         if img is not None:
             images.append(img)
 
-        # results
+    # results
         output = age_gender_detector(img)
         rgb_output = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
-        plt.figure(figsize=(10, 10))
+        plt.figure(figsize=(8, 8))
         plt.imshow(rgb_output)
         plt.show()
 
@@ -211,7 +212,7 @@ def show_results(folder):
 
 
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
-show_results("./img")
+show_results("./img/")
 # show_results("./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/1/")
 
 # print(predicted_age)
