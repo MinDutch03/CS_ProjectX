@@ -51,7 +51,7 @@ pip install pillow
 # 4. Usage
 
 * Download my Repository
-* Open your Command Prompt or Terminal and change directory to the folder where all the files are present.
+* Open your Command Prompt or Terminal and change directory to the folder in which all the files are located.
 * **Detecting Gender and Age of face in Image** Use Command :
 
   ```

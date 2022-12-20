@@ -2,7 +2,7 @@ import cv2
 import time
 import matplotlib.pyplot as plt
 import os
-from PIL import Image
+from PIL import Image, ImageOps
 from logging import exception
 import sys
 from Adafruit_IO import MQTTClient
@@ -10,12 +10,14 @@ from sqlalchemy import except_
 import io
 import base64
 import numpy as np
+from io import BytesIO
+import Adafruit_IO as aio
 
 
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_IfLy59acANcbheiXfQzGKWw0japP"
+AIO_KEY = "aio_iNil54wZD7xXQVDMZmmLoJf21J0L"
 
 
 def connected(client):
@@ -161,18 +163,18 @@ def age_gender_detector(frame):
         # store values for iot
 
         print("Update Age:", age)  # check age name
-        #client.publish("age", age)
+        client.publish("age", age)
 
         print("Update Gender:", gender)  # check age name
-        #client.publish("gender", gender)
+        client.publish("gender", gender)
 
         conf_age = agePreds[0].max()
-        print("Update Age Confidence:", conf_age)  # check age name
-        #client.publish("age_confidence", conf_age)
+        print("Update Age Confidence:", conf_age.item)  # check age name
+        client.publish("age_confidence", conf_age.item())
 
         conf_gender = genderPreds[0].max()
         print("Update Gender Confidence:", conf_gender)  # check age name
-        #client.publish("gender_confidence", conf_gender)
+        client.publish("gender_confidence", conf_gender.item())
 
         label = "{} , {}".format(gender, age)
         cv2.putText(
@@ -213,23 +215,35 @@ def show_results(folder):
 
 
 # show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
-show_results("./img")
+show_results("./img/")
 # show_results("./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/1/")
 
 # print(predicted_age)
 # print(predicted_gender)
 # print(confidenceAge)
 # print(confidenceGender)
-image_encode = "./img/1.jpg"
+'''size = (224, 224)
+        img = ImageOps.fit(img, size, Image.ANTIALIAS)
+
+        # convert image to base64
+        image_condensed = ImageOps.fit(img, (64, 64), Image.ANTIALIAS)
+        buffered = BytesIO()
+        image_condensed.save(buffered, format="PNG")
+        img_64 = base64.b64encode(buffered.getvalue())
+        image_array = np.asarray(img)'''
+
+'''image = "./img/New_1.png"'''
 
 
-def get_base64(image_path):
+'''def get_base64(image_path):
     with open(image_path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode('utf-8')
-
+        return base64.b64encode(img_file.read()).decode('utf-8')'''
+image = Image.open('./img/1.png')
+buffered = BytesIO()
+image.save(buffered, format="PNG")
+img_b64 = base64.b64encode(buffered.getvalue())
 
 print("Encoding...")
-imagedata = get_base64(image_encode)
-
-print("Sending...")
-client.publish("image", imagedata)
+'''imagedata = get_base64(image_encode)'''
+client.publish("image", img_b64)
+print("Sent")
