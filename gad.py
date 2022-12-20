@@ -82,6 +82,9 @@ def getFaceBox(net, frame, conf_threshold=0.7):
     frameHeight = frameOpencvDnn.shape[0]
     frameWidth = frameOpencvDnn.shape[1]
 
+    # blobFromImage creates 4-dimensional blob from image
+    # Optionally resizes and crops image from center, subtract mean values, scales values by scalefactor, swap Blue and Red channels.
+    # blob = Binary Large Object
     blob = cv2.dnn.blobFromImage(
         frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False
     )
@@ -135,9 +138,7 @@ def age_gender_detector(frame):
             max(0, bbox[1] - padding): min(bbox[3] + padding, frame.shape[0] - 1),
             max(0, bbox[0] - padding): min(bbox[2] + padding, frame.shape[1] - 1),
         ]
-        # blobFromImage creates 4-dimensional blob from image.
-        # Optionally resizes and crops image from center, subtract mean values, scales values
-        # by scalefactor, swap Blue and Red channels.
+
         blob = cv2.dnn.blobFromImage(
             face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False
         )
