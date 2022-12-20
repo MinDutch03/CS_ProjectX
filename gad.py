@@ -64,6 +64,7 @@ ageList = [
 genderList = ["Male", "Female"]
 
 # Load network
+# readNet: Read deep learning network represented in modelNweight.
 ageNet = cv2.dnn.readNet(ageModel, ageProto)
 genderNet = cv2.dnn.readNet(genderModel, genderProto)
 faceNet = cv2.dnn.readNet(faceModel, faceProto)
@@ -148,6 +149,7 @@ def age_gender_detector(frame):
         # setInput: Sets the new input value for blob.
         genderNet.setInput(blob)
         # genderPreds = gender Prediction
+        # forward: runs forward pass to compute output of layer with the genderNet
         genderPreds = genderNet.forward()
         gender = genderList[genderPreds[0].argmax()]
 
