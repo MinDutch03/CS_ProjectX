@@ -2,22 +2,19 @@ import cv2
 import time
 import matplotlib.pyplot as plt
 import os
-from PIL import Image, ImageOps
+from PIL import Image
 from logging import exception
 import sys
 from Adafruit_IO import MQTTClient
 from sqlalchemy import except_
 import io
-import base64
 import numpy as np
-from io import BytesIO
-import Adafruit_IO as aio
 
 
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_iNil54wZD7xXQVDMZmmLoJf21J0L"
+AIO_KEY = "aio_IfLy59acANcbheiXfQzGKWw0japP"
 
 
 def connected(client):
@@ -116,13 +113,10 @@ def getFaceBox(net, frame, conf_threshold=0.7):
 def age_gender_detector(frame):
     '''
     Get face of the person inside inputted `frame` and predict their `gender` and `age`.
-
     - Age is categorised into several groups, which are determined based on the
     distiction of the face in some age periods throughout their life.
     All group age: `(0-6)`, `(6-13)`, `(14-19)`, `(20-29)`, `(30- 39)`, `(40-55)`, `(56-60)`, `(61-70)`, `(71-100)`.
-
     - Gender is categorised into only `Male` and `Female`.
-
     ------------------------------------------------------------------------------------------
     Output:
     - Print out the predicted age, gender and the confidence of the prediction for each instance.
@@ -160,21 +154,21 @@ def age_gender_detector(frame):
 
         print("Age : {}, conf = {:.3f}".format(age, agePreds[0].max()))
 
-        # store values for iot
+        # publish values to Adafruit server
 
-        print("Update Age:", age)  # check age name
+        print("Update Age:", age)
         client.publish("age", age)
 
-        print("Update Gender:", gender)  # check age name
+        print("Update Gender:", gender)
         client.publish("gender", gender)
 
         conf_age = agePreds[0].max()
-        print("Update Age Confidence:", conf_age.item)  # check age name
-        client.publish("age_confidence", conf_age.item())
+        print("Update Age Confidence:", conf_age)
+        client.publish("age_confidence", conf_age)
 
         conf_gender = genderPreds[0].max()
-        print("Update Gender Confidence:", conf_gender)  # check age name
-        client.publish("gender_confidence", conf_gender.item())
+        print("Update Gender Confidence:", conf_gender)
+        client.publish("gender_confidence", conf_gender)
 
         label = "{} , {}".format(gender, age)
         cv2.putText(
@@ -185,8 +179,7 @@ def age_gender_detector(frame):
             fontScale=0.8,
             color=(0, 255, 255),
             thickness=2,
-            # cv2. LINE_AA gives anti-aliased line.
-            lineType=cv2.LINE_AA,
+            lineType=cv2.LINE_AA,  # cv2. LINE_AA gives anti-aliased line.
         )
     return frameFace
 
@@ -198,9 +191,8 @@ def show_results(folder):
     # listdir() returns a list containing the names of the entries in the directory given by path
     for filename in os.listdir(folder):
 
-        # cv2.imread: load an image from the specified file
-        # os.path.join: combine path names into one complete path
-        img = cv2.imread(os.path.join(folder, filename))  # try change into
+        # load images from folder and store them in `images`
+        img = cv2.imread(os.path.join(folder, filename))
         if img is not None:
             images.append(img)
 
@@ -211,39 +203,8 @@ def show_results(folder):
         plt.imshow(rgb_output)
         plt.show()
 
-        # publish image data
 
+show_results("./img")
 
-# show_results("./celeba-dataset/img_align_celeba/img_align_celeba")
-show_results("./img/")
+# for those want to test the model on a bigger dataset
 # show_results("./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/1/")
-
-# print(predicted_age)
-# print(predicted_gender)
-# print(confidenceAge)
-# print(confidenceGender)
-'''size = (224, 224)
-        img = ImageOps.fit(img, size, Image.ANTIALIAS)
-
-        # convert image to base64
-        image_condensed = ImageOps.fit(img, (64, 64), Image.ANTIALIAS)
-        buffered = BytesIO()
-        image_condensed.save(buffered, format="PNG")
-        img_64 = base64.b64encode(buffered.getvalue())
-        image_array = np.asarray(img)'''
-
-'''image = "./img/New_1.png"'''
-
-
-'''def get_base64(image_path):
-    with open(image_path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode('utf-8')'''
-image = Image.open('./img/1.png')
-buffered = BytesIO()
-image.save(buffered, format="PNG")
-img_b64 = base64.b64encode(buffered.getvalue())
-
-print("Encoding...")
-'''imagedata = get_base64(image_encode)'''
-client.publish("image", img_b64)
-print("Sent")
