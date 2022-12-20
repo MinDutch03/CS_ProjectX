@@ -82,9 +82,11 @@ def getFaceBox(net, frame, conf_threshold=0.7):
     frameHeight = frameOpencvDnn.shape[0]
     frameWidth = frameOpencvDnn.shape[1]
 
-    # blobFromImage creates 4-dimensional blob from image
-    # Optionally resizes and crops image from center, subtract mean values, scales values by scalefactor, swap Blue and Red channels.
     # blob = Binary Large Object
+    # blobFromImage : preprocessing function
+    # blobFromImage(image, scale_factor, size, mean, swapRB)
+    # blobFromImage creates 4-dimensional blob from image
+    # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.
     blob = cv2.dnn.blobFromImage(
         frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False
     )
