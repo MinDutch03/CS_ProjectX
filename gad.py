@@ -213,7 +213,8 @@ def show_results(folder):
         plt.show()
 
 
-show_results("./img")
+# show_results("./img")
 
 # for those want to test the model on a bigger dataset
-# show_results("./adience-benchmark-gender-and-age-classification/AdienceBenchmarkGenderAndAgeClassification/faces/1/")
+show_results(
+    "./adience-benchmark-gender-and-age-classification/2")
