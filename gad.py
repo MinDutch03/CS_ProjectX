@@ -14,7 +14,7 @@ import numpy as np
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_IfLy59acANcbheiXfQzGKWw0japP"
+AIO_KEY = "aio_iNil54wZD7xXQVDMZmmLoJf21J0L"
 
 
 def connected(client):
@@ -173,11 +173,11 @@ def age_gender_detector(frame):
 
         conf_age = agePreds[0].max()
         print("Update Age Confidence:", conf_age)
-        client.publish("age_confidence", conf_age)
+        client.publish("age_confidence", conf_age.item())
 
         conf_gender = genderPreds[0].max()
         print("Update Gender Confidence:", conf_gender)
-        client.publish("gender_confidence", conf_gender)
+        client.publish("gender_confidence", conf_gender.item())
 
         label = "{} , {}".format(gender, age)
         cv2.putText(
