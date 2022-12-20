@@ -145,6 +145,7 @@ def age_gender_detector(frame):
             face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False
         )
 
+        # setInput: Sets the new input value for blob.
         genderNet.setInput(blob)
         genderPreds = genderNet.forward()
         gender = genderList[genderPreds[0].argmax()]
