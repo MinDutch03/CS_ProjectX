@@ -215,9 +215,3 @@ show_results("./img")
 
 # for those want to test the model on a bigger dataset
 # show_results("./adience-benchmark-gender-and-age-classification/2")
-
-'''
-    Learning Rate Dropout: https://doi.org/10.48550/arXiv.1912.00144
-    Stochastic Gradient Descent: https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31
-    Local Binary Patterns(LBP): https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3
-'''
