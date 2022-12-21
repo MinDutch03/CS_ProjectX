@@ -85,7 +85,7 @@ def getFaceBox(net, frame, conf_threshold=0.7):
 
     # blob = Binary Large Object
     # blobFromImage : preprocessing function
-    # blobFromImage(image, scale_factor, size, mean, swapRB)
+    # blobFromImage(image, scale_factor, size, mean, swapRB, crop, ddepth). If crop is false, direct resize without cropping and preserving aspect ratio is performed
     # blobFromImage creates 4-dimensional blob from image
     # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.
     blob = cv2.dnn.blobFromImage(
@@ -213,11 +213,10 @@ def show_results(folder):
         plt.show()
 
 
-# show_results("./img")
+show_results("./img")
 
 # for those want to test the model on a bigger dataset
-show_results(
-    "./adience-benchmark-gender-and-age-classification/2")
+# show_results("./adience-benchmark-gender-and-age-classification/2")
 
 '''
     Learning Rate Dropout: https://doi.org/10.48550/arXiv.1912.00144
