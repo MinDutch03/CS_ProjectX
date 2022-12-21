@@ -149,7 +149,7 @@ def age_gender_detector(frame):
         # setInput: Sets the new input value for blob.
         genderNet.setInput(blob)
         # genderPreds = gender Prediction
-        # forward: runs forward pass to compute output of layer with the genderNet
+        # forward: runs forward pass to compute output of layer with the genderNetwork
         genderPreds = genderNet.forward()
         gender = genderList[genderPreds[0].argmax()]
 
