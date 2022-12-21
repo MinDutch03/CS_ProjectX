@@ -35,6 +35,7 @@ pip install opencv-python
 pip install matplotlib
 pip install opendatasets
 pip install pillow
+pip install adafruit-io
 ```
 
 # 3. Main Credits For Pretrained Models 🌟:
@@ -73,3 +74,7 @@ pip install pillow
 * [OpenCV](https://opencv.org/)
 * [Matplotlib](https://matplotlib.org/stable/contents.html)
 * [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
+* **AdaBoost Classifier: [https://blog.paperspace.com/adaboost-optimizer/](https://blog.paperspace.com/adaboost-optimizer/)**
+* **Learning Rate Dropout: [https://arxiv.org/abs/1912.00144](https://arxiv.org/abs/1912.00144)**
+* **Local Binary Patterns: [https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3](https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3)**
+* **Stochastic Gradient Descent: [https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31](https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31)**

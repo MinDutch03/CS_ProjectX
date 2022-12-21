@@ -1,5 +1,4 @@
 import cv2
-import time
 import matplotlib.pyplot as plt
 import os
 from PIL import Image
@@ -129,7 +128,6 @@ def age_gender_detector(frame):
     '''
 
     # Read frame
-    t = time.time()
     frameFace, bboxes = getFaceBox(faceNet, frame)
 
     if not bboxes:
