@@ -10,10 +10,10 @@ import io
 import numpy as np
 
 
-# define stuff for Adafruit.
+# define stuff for Adafruit, all values are dependent of the Adafruit account.
 AIO_FEED_ID = ""
-AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_iNil54wZD7xXQVDMZmmLoJf21J0L"
+AIO_USERNAME = "namelessbtw" # change to your aio username
+AIO_KEY = "aio_iNil54wZD7xXQVDMZmmLoJf21J0L" # change to your adafruit key at the time testing this file.
 
 
 def connected(client):
@@ -63,7 +63,7 @@ ageList = [
 genderList = ["Male", "Female"]
 
 # Load network
-# readNet: Read deep learning network represented in modelNweight.
+# readNet: Read deep learning network stored in modelNweight.
 ageNet = cv2.dnn.readNet(ageModel, ageProto)
 genderNet = cv2.dnn.readNet(genderModel, genderProto)
 faceNet = cv2.dnn.readNet(faceModel, faceProto)
@@ -88,9 +88,15 @@ def getFaceBox(net, frame, conf_threshold=0.7):
     # blobFromImage creates 4-dimensional blob from image
     # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.
     blob = cv2.dnn.blobFromImage(
-        frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False
+        image= frameOpencvDnn, 
+        scale_factor= 1.0,
+        size= (300, 300), 
+        mean= [104, 117, 123], 
+        swapRB= True, 
+        crop= False,
     )
 
+    # input preprocessed image into pretrained model to detect face
     net.setInput(blob)
     detections = net.forward()
     bboxes = []
@@ -119,7 +125,7 @@ def age_gender_detector(frame):
     '''
     Get face of the person inside inputted `frame` and predict their `gender` and `age`.
     - Age is categorised into several groups, which are determined based on the
-    distiction of the face in some age periods throughout their life.
+    distinction of the face in some age periods throughout their life.
     All group age: `(0-6)`, `(6-13)`, `(14-19)`, `(20-29)`, `(30- 39)`, `(40-55)`, `(56-60)`, `(61-70)`, `(71-100)`.
     - Gender is categorised into only `Male` and `Female`.
     ------------------------------------------------------------------------------------------
@@ -140,11 +146,16 @@ def age_gender_detector(frame):
             max(0, bbox[0] - padding): min(bbox[2] + padding, frame.shape[1] - 1),
         ]
 
+        # same as above, preprocess image before inputting it into gender detection pretrained model.
         blob = cv2.dnn.blobFromImage(
-            face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False
+            image= face, 
+            scale_factor= 1.0, 
+            size= (227, 227), 
+            mean= MODEL_MEAN_VALUES, 
+            swapRB=False,
         )
 
-        # setInput: Sets the new input value for blob.
+        # setInput: Sets the new input value for blob (aka outputted preprocessed image).
         genderNet.setInput(blob)
         # genderPreds = gender Prediction
         # forward: runs forward pass to compute output of layer with the genderNetwork
