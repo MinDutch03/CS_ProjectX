@@ -83,7 +83,7 @@ def getFaceBox(net, frame, conf_threshold=0.7):
     frameWidth = frameOpencvDnn.shape[1]
 
     # blob = Binary Large Object
-    # blobFromImage : preprocessing function
+    # blobFromImage : is used to preprocess image, by mean subtraction and scaling aka normalization of pixel,plus also channel swapping, before input the image into the model.
     # blobFromImage(image, scale_factor, size, mean, swapRB, crop, ddepth). If crop is false, direct resize without cropping and preserving aspect ratio is performed
     # blobFromImage creates 4-dimensional blob from image
     # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.
