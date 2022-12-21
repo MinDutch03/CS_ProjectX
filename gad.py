@@ -1,5 +1,4 @@
 import cv2
-import time
 import matplotlib.pyplot as plt
 import os
 from PIL import Image
@@ -55,7 +54,7 @@ genderProto = "modelNweight/gender_deploy.prototxt"
 genderModel = "modelNweight/gender_net.caffemodel"
 
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744,
-                     114.895847746)  # model value
+                     114.895847746)  # model mean value
 
 ageList = [
     '(0-6)', '(7-13)', '(14-19)', '(20-29)',
@@ -83,12 +82,11 @@ def getFaceBox(net, frame, conf_threshold=0.7):
     frameHeight = frameOpencvDnn.shape[0]
     frameWidth = frameOpencvDnn.shape[1]
 
-    # blobFromImage is used to preprocess image, by mean subtraction and scaling aka normalisation of pixel, 
-    # plus also channel swapping, before input the image into the model. 
-    
-    # from documentations: 
-    # ''blobFromImage creates 4-dimensional blob from image
-    # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.''
+    # blob = Binary Large Object
+    # blobFromImage : is used to preprocess image, by mean subtraction and scaling aka normalization of pixel,plus also channel swapping, before input the image into the model.
+    # blobFromImage(image, scale_factor, size, mean, swapRB, crop, ddepth). If crop is false, direct resize without cropping and preserving aspect ratio is performed
+    # blobFromImage creates 4-dimensional blob from image
+    # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.
     blob = cv2.dnn.blobFromImage(
         image= frameOpencvDnn, 
         scale_factor= 1.0,
@@ -136,7 +134,6 @@ def age_gender_detector(frame):
     '''
 
     # Read frame
-    t = time.time()
     frameFace, bboxes = getFaceBox(faceNet, frame)
 
     if not bboxes:
@@ -161,7 +158,7 @@ def age_gender_detector(frame):
         # setInput: Sets the new input value for blob (aka outputted preprocessed image).
         genderNet.setInput(blob)
         # genderPreds = gender Prediction
-        # forward: runs forward pass to compute output of layer with the genderNet
+        # forward: runs forward pass to compute output of layer with the genderNetwork
         genderPreds = genderNet.forward()
         gender = genderList[genderPreds[0].argmax()]
 
@@ -225,14 +222,7 @@ def show_results(folder):
         plt.show()
 
 
-# show_results("./img")
+show_results("./img")
 
 # for those want to test the model on a bigger dataset
-show_results(
-    "./adience-benchmark-gender-and-age-classification/2")
-
-'''
-    Learning Rate Dropout: https://doi.org/10.48550/arXiv.1912.00144
-    Stochastic Gradient Descent: https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31
-    Local Binary Patterns(LBP): https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3
-'''
+# show_results("./adience-benchmark-gender-and-age-classification/2")

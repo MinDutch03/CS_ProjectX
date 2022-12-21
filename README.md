@@ -24,7 +24,7 @@
 
 # 1.3  Dataset
 
-For this python project, I used the Adience dataset; the dataset is available in the public domain and you can find it [here](https://www.kaggle.com/ttungl/adience-benchmark-gender-and-age-classification). This dataset serves as a benchmark for face photos and is inclusive of various real-world imaging conditions like noise, lighting, pose, and appearance. The images have been collected from Flickr albums and distributed under the Creative Commons (CC) license. It has a total of 26,580 photos of 2,284 subjects in nine age ranges and is about 1GB in size. The models I used was trained on this dataset. By virtue of its large size, I only kept 3 folders of pictures.
+For this python project, we used the Adience dataset; the dataset is available in the public domain and you can find it [here](https://www.kaggle.com/ttungl/adience-benchmark-gender-and-age-classification). This dataset serves as a benchmark for face photos and is inclusive of various real-world imaging conditions like noise, lighting, pose, and appearance. The images have been collected from Flickr albums and distributed under the Creative Commons (CC) license. It has a total of 26,580 photos of 2,284 subjects in nine age ranges and is about 1GB in size. The models I used was trained on this dataset. By virtue of its large size, I only kept 3 folders of pictures.
 
 To download the dataset on Kaggle, I showed you in *downlod_data.py*  file.
 
@@ -35,6 +35,7 @@ pip install opencv-python
 pip install matplotlib
 pip install opendatasets
 pip install pillow
+pip install adafruit-io
 ```
 
 # 3. Main Credits For Pretrained Models 🌟:
@@ -73,3 +74,7 @@ pip install pillow
 * [OpenCV](https://opencv.org/)
 * [Matplotlib](https://matplotlib.org/stable/contents.html)
 * [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
+* **AdaBoost Classifier: [https://blog.paperspace.com/adaboost-optimizer/](https://blog.paperspace.com/adaboost-optimizer/)**
+* **Learning Rate Dropout: [https://arxiv.org/abs/1912.00144](https://arxiv.org/abs/1912.00144)**
+* **Local Binary Patterns: [https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3](https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3)**
+* **Stochastic Gradient Descent: [https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31](https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31)**
