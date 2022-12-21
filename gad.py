@@ -55,7 +55,7 @@ genderProto = "modelNweight/gender_deploy.prototxt"
 genderModel = "modelNweight/gender_net.caffemodel"
 
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744,
-                     114.895847746)  # model value
+                     114.895847746)  # model mean value
 
 ageList = [
     '(0-6)', '(7-13)', '(14-19)', '(20-29)',
