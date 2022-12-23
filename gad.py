@@ -15,7 +15,7 @@ AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"    # change to your aio username
 
 # change to your adafruit key at the time testing this file.
-AIO_KEY = "aio_aEYN02YbJbaf7X8nclBxdFMmNrSB"
+AIO_KEY = "aio_UnPS09rq72Rpk6MGNNvmaCexicic"
 
 
 def connected(client):
