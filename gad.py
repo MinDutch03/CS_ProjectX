@@ -13,6 +13,7 @@ import numpy as np
 # define stuff for Adafruit, all values are dependent of the Adafruit account.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"    # change to your aio username
+
 # change to your adafruit key at the time testing this file.
 AIO_KEY = "aio_aEYN02YbJbaf7X8nclBxdFMmNrSB"
 
