@@ -15,7 +15,7 @@ AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"    # change to your aio username
 
 # change to your adafruit key at the time testing this file.
-AIO_KEY = "aio_UnPS09rq72Rpk6MGNNvmaCexicic"
+AIO_KEY = "aio_urxk879ogHTaVWzTLzEHzCSIeex9"
 
 
 def connected(client):
@@ -90,12 +90,7 @@ def getFaceBox(net, frame, conf_threshold=0.7):
     # blobFromImage creates 4-dimensional blob from image
     # Optionally resizes and crops image from center, subtract mean values, scales values by scale_factor, swap Blue and Red channels.
     blob = cv2.dnn.blobFromImage(
-        image=frameOpencvDnn,
-        scale_factor=1.0,
-        size=(300, 300),
-        mean=[104, 117, 123],
-        swapRB=True,
-        crop=False,
+        frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False
     )
 
     # input preprocessed image into pretrained model to detect face
@@ -150,11 +145,7 @@ def age_gender_detector(frame):
 
         # same as above, preprocess image before inputting it into gender detection pretrained model.
         blob = cv2.dnn.blobFromImage(
-            image=face,
-            scale_factor=1.0,
-            size=(227, 227),
-            mean=MODEL_MEAN_VALUES,
-            swapRB=False,
+            face, 1.0, (227, 227), MODEL_MEAN_VALUES, False
         )
 
         # setInput: Sets the new input value for blob (aka outputted preprocessed image).
