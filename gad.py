@@ -13,7 +13,7 @@ import numpy as np
 # define stuff for Adafruit.
 AIO_FEED_ID = ""
 AIO_USERNAME = "namelessbtw"
-AIO_KEY = "aio_iNil54wZD7xXQVDMZmmLoJf21J0L"
+AIO_KEY = "aio_aEYN02YbJbaf7X8nclBxdFMmNrSB"
 
 
 def connected(client):
